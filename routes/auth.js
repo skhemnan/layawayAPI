@@ -42,6 +42,9 @@ router.post('/register', async (req,res) => {
 		let regEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if(!regEmail.test(email)) return res.status(401).json({error: 'Please enter a valid email address!'})
 
+		//Password validation
+		if(password == "") return res.status(401).json({error: 'Please enter a password!'})
+
 		// Amount validation
 		let validSavings = /^\$?[0-9]+(\.[0-9][0-9])?$/.test(`${savings}`.replace(',',''))
 		if(!validSavings) return res.status(401).json({error: 'Please enter a valid dollar amount for your savings!'})

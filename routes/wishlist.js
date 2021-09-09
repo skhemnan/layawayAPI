@@ -13,6 +13,12 @@ router.post('/', verifyToken, async (req, res) => {
 		const {product, price} = req.body
 		let id = req.cookies['id']
 
+		//ID Validation
+		if(id == "") return res.status(400).json({error: 'Unauthorized Access!'})
+
+		// Product validation
+		if(product == "") return res.status(401).json({error: 'Please enter a product name!'})
+
 		// Price validation
 		let validPrice = /^\$?[0-9]+(\.[0-9][0-9])?$/.test(`${price}`.replace(',',''))
 		if(!validPrice) return res.status(401).json({error: 'Please enter a valid dollar amount for the product price!'})
@@ -31,6 +37,9 @@ router.get('/', verifyToken, async (req, res) => {
 		//Get the user info
 		let email = req.cookies['email']
 		let id = req.cookies['id']
+
+		//ID and Email Validation
+		if(id == "" || email == "") return res.status(400).json({error: 'Unauthorized Access!'})
 
 		// Grab the user's savings to compare
 		const userQuery = 'SELECT user_savings FROM users WHERE user_id = $1'

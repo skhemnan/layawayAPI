@@ -14,6 +14,7 @@ router.get('/me', verifyToken , async (req, res) => {
 
   //	Verify Email Access
 	let loggedEmail = req.cookies['email'].replace('%40','@')
+	if(loggedEmail == "") return res.status(400).json({error: 'Please specify an email address you would like to use!'})
 	if(email !== loggedEmail) return res.status(400).json({error: 'Unauthorized Access!'})
 
 		res.json({message: `Hello again ${users.rows[0].user_email}`, user: users.rows})	
@@ -26,7 +27,15 @@ router.post('/savings', verifyToken, async(req, res) => {
 	try {
 		//Add money to savings	
 		const {addition} = req.body
+
+		// Amount validation
+		let validAddition = /^\$?[0-9]+(\.[0-9][0-9])?$/.test(`${addition}`.replace(',',''))
+		if(!validAddition) return res.status(401).json({error: 'Please enter a valid dollar amount for your addition!'})
+
 		const id = req.cookies['id']
+		// Verify ID
+		if(id == "") return res.status(401).json({error: 'Unauthorized Access!'})
+
 		const query = 'UPDATE users SET user_savings = user_savings + $1 WHERE user_id = $2 RETURNING *'
 		const updateSavings = await pool.query(query, [addition, id])
 
