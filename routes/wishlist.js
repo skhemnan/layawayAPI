@@ -1,6 +1,9 @@
-import express from 'express';
-import pool from '../db.js';
-import {verifyToken} from '../middleware/authorize.js'
+// import express from 'express';
+// import pool from '../db.js';
+// import {verifyToken} from '../middleware/authorize.js'
+const express = require('express')
+const pool = require('../db.js')
+const {verifyToken} = require('../middleware/authorize.js')
 
 const router = express.Router();
 
@@ -57,4 +60,5 @@ router.get('/', verifyToken, async (req, res) => {
 })
 
 
-export default router;
+// export default router;
+module.exports = router;

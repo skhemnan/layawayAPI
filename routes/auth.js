@@ -1,8 +1,12 @@
-import express, { response } from 'express';
-import pool from '../db.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken'
-import {authToken} from '../utils/authHelper.js'
+// import express, { response } from 'express';
+// import pool from '../db.js';
+// import bcrypt from 'bcrypt';
+// import jwt from 'jsonwebtoken'
+// import {authToken} from '../utils/authHelper.js'
+const express = require('express')
+const pool = require('../db.js')
+const bcrypt = require('bcrypt')
+const {authToken} = require('../utils/authHelper.js')
 
 const router = express.Router();
 
@@ -72,4 +76,5 @@ router.delete('/logout', (req, res) => {
 	}
 })
 
-export default router;
+// export default router;
+module.exports = router

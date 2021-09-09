@@ -1,4 +1,5 @@
-import jwt from 'jsonwebtoken';
+//import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken')
 
 function authToken({user_id, user_email}) {
 	const user = {user_id, user_email}
@@ -6,4 +7,5 @@ function authToken({user_id, user_email}) {
 	return ({accessToken})
 }
 
-export {authToken};
+//export {authToken};
+module.exports = {authToken}
